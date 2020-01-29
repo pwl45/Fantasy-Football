@@ -276,7 +276,9 @@ class Player:
             result += "\nAverage Score: " + str(round(self.getAverage(),2)) + "\t\tMedian Score: " + str(round(self.getMedian(),2))
             result += "\nStandard Deviation: " + str(round(self.getStDev(),2)) + "\t\tAverage Deviation: " + str(round(self.getAvgDev(), 2)) + "\n"
             #result += "\n" + str(self.safeTotal(0))
-
         return result
+    def smallRepr(self):
+        return (self.name + ": " + self.team + " " +self.position)
+
 
 

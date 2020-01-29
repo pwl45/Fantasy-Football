@@ -1,4 +1,12 @@
+##TODO:
+# Expand List function
+# Custom VBD
+# Custom Values
+#
+
 allImported = True
+
+positions = ["rb","wr","qb","te"]
 
 try:
     import requests
@@ -20,9 +28,10 @@ def getPlayer(name = ""):
             return player
     return None
 
-# This method uses ProFootballReference's list of players to populate a big list of players.
+# This method uses ProFootballReference's list of players to populate a big
+# of players.
 # I don't actually know HTML so I basically made up at where the data was in the HTML code.
-def getPlayers(year='2018'):
+def getPlayers(year='2019'):
     playerlist = []
     response = requests.get('https://www.pro-football-reference.com/years/' + year + '/fantasy.htm')
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -56,29 +65,48 @@ def getPlayers(year='2018'):
 
 if allImported:
     print("Note: an internet connection is required to use this program.")
-    year = input("Enter a year between 1970 and 2018 to get fantasy data on that year: ")
-    while (not year.isdigit() or int(year) < 1970 or int(year) > 2018):
-        year = input("Year must be a number between 1970 and 2018. Please re-enter.  ")
+    year = input("Enter a year between 1970 and 2019 to get fantasy data on that year: ")
+    while (not year.isdigit() or int(year) < 1970 or int(year) > 2019):
+        year = input("Year must be a number between 1970 and 2019. Please re-enter.  ")
     players = getPlayers(year)
     print("Fantasy Data loaded for " + year + ".")
 
+    #TODO: Implement list by position
     while True:
         print("\nTo get data on an NFL fantasy player (for example, Todd Gurley), enter their name, or q to quit.")
         name = input("To get a list of the top x players by fantasy value, enter list x. For example, \"list 10\" prints the top 10 fantasy players.  ")
         if name.lower() == "q":
             break
         if name.lower()[0:4] == "list":
-            name = name.replace(" ", "")
-            if name[4:].isdigit():
-                print()
-                i = 0
-                limit = min(int(name[4:]), 583)
-                for i in range(limit) :
-                    print(players[i].name)
-                print()
-            else:
-                print("\nPlease follow the list command with an integer.\n")
-        elif name.isdigit() and int(name) >= 1970 and int(name) <= 2018:
+            commands = name.split()
+            if(len(commands) < 1):
+                print("\nPlease separate input with spaces.\nFor example, type \"List 10 RB\", not \"List10RB\"")
+            elif len(commands) == 2:
+                if commands[1].isdigit():
+                    print()
+                    i = 0
+                    limit = min(int(commands[1]), len(players))
+                    while(i < limit):
+                        i+=1
+                        print(players[i].smallRepr())
+                    #for i in range(limit):
+                    #    print(players[i].name)
+                    print()
+                else:
+                    print("\nPlease follow the list command with an integer.\n")
+            elif len(commands) == 3:
+                third = commands[2].lower()
+                if commands[1].isdigit():
+                    print()
+                    if(third in positions):
+                        count = 0
+                        i = 0
+                        while(count < int(commands[1]) and i < len(players)):
+                            if(players[i].position.lower() == third):
+                                print(players[i].smallRepr())
+                                count+=1;
+                            i+=1
+        elif name.isdigit() and int(name) >= 1970 and int(name) <= 2019:
             year = name
             players = getPlayers(year)
             print("Fantasy Data loaded for " + year + ".")

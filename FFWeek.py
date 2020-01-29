@@ -1,5 +1,5 @@
 import datetime
-weekDates = [['2018-9-12']] * 49
+weekDates = [['2018-9-12']] * 50
 
 # Compares two dates, returns a positive number if date1 is later than date 2, and a negative number if date1 is earlier
 def compDate(date1 = '0000-00-00', date2 = '0000-00-00'):
@@ -25,12 +25,17 @@ def findWeek(date = '0000-00-00',year=2018):
 
 # TODO: You don't really need to store any data except the original date.
 # The rest can be extrapolated in the findWeek method
+# SEED IS TUESDAY OR WEDNESDAY AFTER WEEK 1
 def setWeeks(currYear = 2018, origin = '2018-09-12'):
     weekDates[currYear-1970] = []
     for i in range(0, 17):
         weekDates[currYear - 1970] += [str(datetime.date(int(origin[0:4]), int(origin[5:7]), int(origin[8:10])) + datetime.timedelta(days= 7*i))]
 
-
+setWeeks(2019,'2019-09-11')
 setWeeks()
 setWeeks(2017,'2017-09-13')
 setWeeks(2016,'2016-09-14')
+setWeeks(2015,'2015-09-16')
+setWeeks(2014,'2014-09-10')
+
+
