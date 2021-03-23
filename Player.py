@@ -115,11 +115,14 @@ class Player:
     def getFanTable(self):
         results = []
         totals = []
+        
         for i in range(0, len(self.data)):
             result = []
             for j in range(len(self.valueList)):
                 #checks that this column is going to be part of the fantable
                 if not isinstance(self.data[0][j], Stat.Stat) or self.data[0][j].fdisplay:
+                    #print(len(self.data),len(self.data[i]))
+                    #print(i,j)
                     result += [self.data[i][j]]
 
             if i == 0:
@@ -242,10 +245,23 @@ class Player:
                     if curr.isdigit() or (len(curr) > 0 and curr[0] == "-" and curr[1:].isdigit()):
                         score += self.valueList[j] * int(results[i][j])
                 self.addScore(i, round(score,2))
+
             self.data = results
+            self.cleanUp()
             self.getFanTable()
             self.scoresPopulated = True
-
+    #Removes weeks where player did not play
+    def cleanUp(self):
+        maxlen = 0
+        for i in range(0,len(self.data)):
+            maxlen = max(maxlen,len(self.data[i]))
+        
+        i=0
+        while(i<len(self.data)):
+            if len(self.data[i]) < maxlen:
+                self.data.pop(i)
+            else:
+                i+=1    
 
     def tableString(self, table = [""]):
         result = ""

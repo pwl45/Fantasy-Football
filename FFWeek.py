@@ -1,5 +1,5 @@
 import datetime
-weekDates = [['2018-9-12']] * 50
+weekDates = [['2018-9-12']] * 51
 
 # Compares two dates, returns a positive number if date1 is later than date 2, and a negative number if date1 is earlier
 def compDate(date1 = '0000-00-00', date2 = '0000-00-00'):
@@ -31,6 +31,7 @@ def setWeeks(currYear = 2018, origin = '2018-09-12'):
     for i in range(0, 17):
         weekDates[currYear - 1970] += [str(datetime.date(int(origin[0:4]), int(origin[5:7]), int(origin[8:10])) + datetime.timedelta(days= 7*i))]
 
+setWeeks(2020,'2020-09-15')
 setWeeks(2019,'2019-09-11')
 setWeeks()
 setWeeks(2017,'2017-09-13')

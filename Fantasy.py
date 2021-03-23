@@ -31,14 +31,15 @@ def getPlayer(name = ""):
 # This method uses ProFootballReference's list of players to populate a big
 # of players.
 # I don't actually know HTML so I basically made up at where the data was in the HTML code.
-def getPlayers(year='2019'):
+def getPlayers(year='2020'):
     playerlist = []
     response = requests.get('https://www.pro-football-reference.com/years/' + year + '/fantasy.htm')
     soup = BeautifulSoup(response.text, 'html.parser')
     print("Internet connection successful")
     lines = str(soup).splitlines()
+    #print(lines)
     for line in lines:
-        if (re.findall("^<tr><th", line)):  # Finds all HTML lines that begin with the string that indicates a player
+        if (re.findall("^<tr><th", line)) or (re.findall("^<tbody><tr><th", line)):  # Finds all HTML lines that begin with the string that indicates a player
             # These two statements find the player's name within the line that contains the player.
             i = line.find("htm\">") + 5
             playerName = line[i:line[i:].find("<") + i].title()
@@ -61,19 +62,20 @@ def getPlayers(year='2019'):
             playerPosition = line[i + 13:i + 15]
 
             playerlist += [Player.Player(playerName, playerTeam, playerUrl, playerPosition,year)]  # creates a player with a name, url, and team.
+    print(playerlist[:10])
     return playerlist
 
 if allImported:
     print("Note: an internet connection is required to use this program.")
-    year = input("Enter a year between 1970 and 2019 to get fantasy data on that year: ")
-    while (not year.isdigit() or int(year) < 1970 or int(year) > 2019):
-        year = input("Year must be a number between 1970 and 2019. Please re-enter.  ")
+    year = input("Enter a year between 1970 and 2020 to get fantasy data on that year: ")
+    while (not year.isdigit() or int(year) < 1970 or int(year) > 2020):
+        year = input("Year must be a number between 1970 and 2020. Please re-enter.  ")
     players = getPlayers(year)
     print("Fantasy Data loaded for " + year + ".")
 
     #TODO: Implement list by position
     while True:
-        print("\nTo get data on an NFL fantasy player (for example, Todd Gurley), enter their name, or q to quit.")
+        print("\nTo get data on an NFL fantasy player (for example, Todd Gurley), enter their name, or q to quit.\n")
         name = input("To get a list of the top x players by fantasy value, enter list x. For example, \"list 10\" prints the top 10 fantasy players.  ")
         if name.lower() == "q":
             break
@@ -87,8 +89,8 @@ if allImported:
                     i = 0
                     limit = min(int(commands[1]), len(players))
                     while(i < limit):
-                        i+=1
                         print(players[i].smallRepr())
+                        i+=1
                     #for i in range(limit):
                     #    print(players[i].name)
                     print()
