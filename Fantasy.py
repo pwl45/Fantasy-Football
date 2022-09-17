@@ -2,7 +2,6 @@
 # Expand List function
 # Custom VBD
 # Custom Values
-#
 
 allImported = True
 
@@ -31,7 +30,7 @@ def getPlayer(name = ""):
 # This method uses ProFootballReference's list of players to populate a big
 # of players.
 # I don't actually know HTML so I basically made up at where the data was in the HTML code.
-def getPlayers(year='2020'):
+def getPlayers(year='2021'):
     playerlist = []
     response = requests.get('https://www.pro-football-reference.com/years/' + year + '/fantasy.htm')
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -62,14 +61,14 @@ def getPlayers(year='2020'):
             playerPosition = line[i + 13:i + 15]
 
             playerlist += [Player.Player(playerName, playerTeam, playerUrl, playerPosition,year)]  # creates a player with a name, url, and team.
-    print(playerlist[:10])
+    # print(playerlist[:10])
     return playerlist
 
 if allImported:
     print("Note: an internet connection is required to use this program.")
-    year = input("Enter a year between 1970 and 2020 to get fantasy data on that year: ")
-    while (not year.isdigit() or int(year) < 1970 or int(year) > 2020):
-        year = input("Year must be a number between 1970 and 2020. Please re-enter.  ")
+    year = input("Enter a year between 1970 and 2021 to get fantasy data on that year: ")
+    while (not year.isdigit() or int(year) < 1970 or int(year) > 2021):
+        year = input("Year must be a number between 1970 and 2021. Please re-enter.  ")
     players = getPlayers(year)
     print("Fantasy Data loaded for " + year + ".")
 

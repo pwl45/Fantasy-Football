@@ -115,7 +115,6 @@ class Player:
     def getFanTable(self):
         results = []
         totals = []
-        
         for i in range(0, len(self.data)):
             result = []
             for j in range(len(self.valueList)):
@@ -255,7 +254,6 @@ class Player:
         maxlen = 0
         for i in range(0,len(self.data)):
             maxlen = max(maxlen,len(self.data[i]))
-        
         i=0
         while(i<len(self.data)):
             if len(self.data[i]) < maxlen:
