@@ -10,6 +10,7 @@ def compDate(date1 = '0000-00-00', date2 = '0000-00-00'):
     monthDiff = int(date1[5:7]) - int(date2[5:7])
     if monthDiff != 0:
         return monthDiff
+
     return int(date1[8:10]) - int(date2[8:10])
 
 # Returns the week number that a given game occured in.
@@ -23,6 +24,7 @@ def findWeek(date = '0000-00-00',year=2018):
     for i in range(0, len(weeks)):
         if compDate(date, weeks[i]) < 0:
             return i + 1
+    return 999
 
 # TODO: You don't really need to store any data except the original date.
 # The rest can be extrapolated in the findWeek method
@@ -37,7 +39,7 @@ def setWeeks(currYear = 2018, origin = '2018-09-12'):
         #                              year                                month             day
         weekDates[currYear - 1970] += [str(datetime.date(int(origin[0:4]), int(origin[5:7]), int(origin[8:10])) + datetime.timedelta(days= 7*i))]
 
-setWeeks(2022,'2021-09-13')
+setWeeks(2022,'2022-09-13')
 setWeeks(2021,'2021-09-15')
 setWeeks(2020,'2020-09-15')
 setWeeks(2019,'2019-09-11')
